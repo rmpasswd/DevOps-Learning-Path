@@ -4,5 +4,8 @@
 
 ---
 
-**Bridges** 'devide' the network...
+**Bridges** 'devide' the network.
+>A bridge is a way to connect two Ethernet segments together in a protocol independent way. Packets are forwarded based on Ethernet address, rather than IP address (like a router). Since forwarding is done at Layer 2, all protocols can go transparently through a bridge.
+
+
 https://www.javatpoint.com/difference-between-bridge-and-gateway
