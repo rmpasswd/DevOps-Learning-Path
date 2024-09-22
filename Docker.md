@@ -21,6 +21,10 @@ this is a 'task manager' for docker. Shows running instances.
 Shows history of previously run container apps...
 
 ```mermaid
-  docker-file to containers;
-  Docker File -> Docker Image;
+flowchart TD
+    A(Docker file) --> B(Docker Image);
+    B -->C(Docker Container 1);
+    B -->D(Docker Container 2);
+    B -->E(Docker Container 3);
+
 ```
