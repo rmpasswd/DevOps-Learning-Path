@@ -14,6 +14,13 @@ But in Containers approach, a 'container engine' seperates the concerns such as 
 `docker run -p 5000:80 nginx`  
 connect host's local port 5000 to the exposed internal port 80
 
+`docker run -it -p 1880:1880 -v node_red_docker_data:/data --name noderedd nodered/node-red`  
+- Here the image is _nodered/node-red_ (downloaded from docker hub)
+- the container is given a name _noderedd_.
+- The data is mounted to a volume named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** !
+![image](https://github.com/user-attachments/assets/7007e1ff-2d05-4313-9bac-5ce1c73f4751)
+
+
 `docker ps`  
 this is a 'task manager' for docker. Shows running instances.
 
