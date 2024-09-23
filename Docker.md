@@ -12,7 +12,7 @@ But in Containers approach, a 'container engine' seperates the concerns such as 
 => this will _start_ an nginx server(default port 80). But in browser _localhost:80_ will not work. We need to forward ports from inside Docker instance _to_ our host machine.
 
 `docker run -p 5000:80 nginx`  
-This is expose host's 5000 port to the docker nginx instance's 80 port
+connect host's local port 5000 to the exposed internal port 80
 
 `docker ps`  
 this is a 'task manager' for docker. Shows running instances.
