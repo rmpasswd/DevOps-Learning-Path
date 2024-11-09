@@ -28,9 +28,11 @@ Connect host computer's port 5000 to the exposed internal port 80 (from nginx' d
 `docker run -it nodered/node-red --name noderedd -p 1880:1880 -anotherHostPort:anotherInternalPort -v node_red_docker_data:/data  `  
 - _--name noderedd_ : the container is given a name
 - Here the image is _nodered/node-red_ (downloaded from docker hub)
-- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** !
+- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** ! Note that here we are binding a docker volume instead of a folder in our own machine.
 ![image](https://github.com/user-attachments/assets/7007e1ff-2d05-4313-9bac-5ce1c73f4751)
 ![image](https://github.com/user-attachments/assets/e782b65e-1ee6-4d73-af00-2bbdaff405d1)  
+Above 2 images correspond to this flag: `-v node_red_docker_data:/data`
+The following image 
 
 - **-it flag**
     >-i or --interactive:  
@@ -69,17 +71,17 @@ if there are 3 test nginx containers and all of them have "nginx" in their verbo
 
 **Use Case**  
 The following container are running and needs to forefully shutdown and the images removed.
-![`docker ps` output](./media%20assets/image-1.png)
+![`docker ps` output](./media assets/image-1.png)
 
 `docker ps -q --filter name=supabase*`  
 Applies filter on NAMES column, this command will only print the containerID column because of -q(quiet) flag
-![docker ps filter](./media%20assets/image-2.png)
+![docker ps filter](./media assets/image-2.png)
 
 `docker ps --filter name=supabase* --format "table {{.ID}}\t{{.Names}}"`  
 We can also omit quiet flag and use --format.  
 [docs about format flag](https://docs.docker.com/engine/cli/formatting/#json)  
 [docs about filter flag](https://docs.docker.com/reference/cli/docker/container/ls/#filter)  
-![docker ps filter show name](./media%20assets/image-3.png)
+![docker ps filter show name](./media assets/image-3.png)
 
 
 To simply stop all containers: `docker kill $(docker ps -q)`. **Works in powershell only, \$() not supported in cmd**  
@@ -88,14 +90,14 @@ Then remove all 'supabase' containers: `docker rm $(docker ps -aq --filter name=
 
 **To remove all images:**  
 There is a catch. first we cannot use the 'repository' column name in the filter, we can use 'reference' instead,we can mention repository field and the tag field as well. Secondly, the filter wildcard is not working as expected...  
-![docker images filter](./media%20assets/image-4.png)
+![docker images filter](./media assets/image-4.png)
 
 It seems that wildcards are not working as expected. But only specifying * and nothing else shows 'nginx'.  
 The catch is that if repository contains a slash, we have to include this in the search pattern. [see relevent github comment](https://github.com/docker/cli/issues/1332#issuecomment-441082261)
 
 The supabase imamges have 2 slash, nginx has 0 slash, thats why it matched, and all other did not.  
-![slash in image repo column](./media%20assets/image-5.png)  
-![docker iamge filter 2](./media%20assets/image-6.png)
+![slash in image repo column](./media assets/image-5.png)  
+![docker iamge filter 2](./media assets/image-6.png)
 
 `docker images --filter=reference='*\/supabase\/*'` Note: the slash **/** has to be escaped with a backslash **\\**  
 And finally delete the images in _windows powershell_ with `docker rmi $(docker images -q --filter=reference='*\/supabase\/*')`
