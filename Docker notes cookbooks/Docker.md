@@ -28,7 +28,7 @@ Connect host computer's port 5000 to the exposed internal port 80 (from nginx' d
 `docker run -it nodered/node-red --name noderedd -p 1880:1880 -anotherHostPort:anotherInternalPort -v node_red_docker_data:/data  `  
 - _--name noderedd_ : the container is given a name
 - Here the image is _nodered/node-red_ (downloaded from docker hub)
-- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** ! Note that here we are binding a docker volume instead of a folder in our own machine.
+- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** ! Note that _here_ we are binding the _/data_ directory of our node-red container to a _directory inside docker's own installation inside wsl_, instead of a folder in our own machine(e.g. C:\Documents\...).
 ![image](https://github.com/user-attachments/assets/7007e1ff-2d05-4313-9bac-5ce1c73f4751)
 ![image](https://github.com/user-attachments/assets/e782b65e-1ee6-4d73-af00-2bbdaff405d1)  
 Above 2 images correspond to this flag: `-v node_red_docker_data:/data`
@@ -40,7 +40,8 @@ The following image
     -t or -tty (Pseudo-TTY):  
     If you add this flag, your container's output is attached to your terminal. Seems it mostly about formatting output (for bin/bash, for example - try ls with and without -t flag), but sometimes is more important because some apps change their behaviour depending on being launched via terminal or not (text editors, for example, or mechanism of masking password with * implemented by terminal).  
 - **-rm flag**
-      > After working with the container, when the user stops the container, the container, image and volume is removed. But if a -v flag is used, then the data persists, next time docker run is re-run.
+  => After working with the container, when the container is stopped with 'docker stop' command then the container is removed. But if a -v flag is used, then the data persists. If **/tmp** directory is used like this `-v /tmp/mysql-data:/var/lib/mysql` then the volume wont be visible, it will persist between container restarts, but it will not persist when the machine restarts.
+   Following is when /tmp dir is used:
   ![image](https://github.com/user-attachments/assets/7d4d338c-d548-4f52-8ca4-05d66401d4b7)
 
 **Stop, Remove Image and Container**  
