@@ -39,6 +39,9 @@ The following image
     When you type docker run -i this means that your terminal will transfer your input to container (app in container) until you press ctrl-D (leave container). For example, if some app works in container that waits for user input you can type something and that will be forwarded to the app.  
     -t or -tty (Pseudo-TTY):  
     If you add this flag, your container's output is attached to your terminal. Seems it mostly about formatting output (for bin/bash, for example - try ls with and without -t flag), but sometimes is more important because some apps change their behaviour depending on being launched via terminal or not (text editors, for example, or mechanism of masking password with * implemented by terminal).  
+- **-rm flag**
+      > After working with the container, when the user stops the container, the container, image and volume is removed. But if a -v flag is used, then the data persists, next time docker run is re-run.
+  ![image](https://github.com/user-attachments/assets/7d4d338c-d548-4f52-8ca4-05d66401d4b7)
 
 **Stop, Remove Image and Container**  
 
