@@ -32,7 +32,9 @@ Connect host computer's port 5000 to the exposed internal port 80 (from nginx' d
 ![image](https://github.com/user-attachments/assets/7007e1ff-2d05-4313-9bac-5ce1c73f4751)
 ![image](https://github.com/user-attachments/assets/e782b65e-1ee6-4d73-af00-2bbdaff405d1)  
 Above 2 images correspond to this flag: `-v node_red_docker_data:/data`
-The following image 
+The following image is another example. We can make a text file from  the host machine's file explorer, it will show in the _connected_ container volumne directory:
+![alt text](./media assets/image-7.png)  
+
 
 - **-it flag**
     >-i or --interactive:  
