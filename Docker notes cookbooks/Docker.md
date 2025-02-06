@@ -28,12 +28,13 @@ Connect host computer's port 5000 to the exposed internal port 80 (from nginx' d
 `docker run -it nodered/node-red --name noderedd -p 1880:1880 -anotherHostPort:anotherInternalPort -v node_red_docker_data:/data  `  
 - _--name noderedd_ : the container is given a name
 - Here the image is _nodered/node-red_ (downloaded from docker hub)
-- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** ! Note that _here_ we are binding the _/data_ directory of our node-red container to a _directory inside docker's own installation inside wsl_, instead of a folder in our own machine(e.g. C:\Documents\...).
+- -v node_red_docker_data:/data => The _data_ folder inside the container is mounted to a folder named _node-red_docker_data_. The named volume is found here: **\\wsl$\docker-desktop\mnt\docker-desktop-disk\data\docker\volumes** ! Note that _here_ we are binding the _/data_ directory of our node-red container to a _directory inside docker's own installation inside wsl_, instead of a folder in our own machine(e.g. C:\Documents\...).  
 ![image](https://github.com/user-attachments/assets/7007e1ff-2d05-4313-9bac-5ce1c73f4751)
 ![image](https://github.com/user-attachments/assets/e782b65e-1ee6-4d73-af00-2bbdaff405d1)  
 Above 2 images correspond to this flag: `-v node_red_docker_data:/data`
-The following image is another example. We can make a text file from  the host machine's file explorer, it will show in the _connected_ container volumne directory:
-![alt text](./media assets/image-7.png)  
+The following image is another example. We can make a text file from  the host machine's file explorer, it will show in the _connected_ container volumne directory:  
+
+![image-7](../media%20assets/image-7.png)  
 
 
 - **-it flag**
