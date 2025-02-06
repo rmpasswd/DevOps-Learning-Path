@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      # when using wsl, but i am using windows terminal, / or \ or whats the path ?
+      - //z/Documents_/Automize/Supabase/postgres-docker-standalone/winvolume_postgresql_data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
