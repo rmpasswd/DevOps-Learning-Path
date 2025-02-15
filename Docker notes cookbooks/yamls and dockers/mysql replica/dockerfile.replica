@@ -1,0 +1,5 @@
+FROM mysql:8.0-debian
+
+COPY ./replica.cnf /etc/mysql/cnf.d/
+
+CMD "apt"

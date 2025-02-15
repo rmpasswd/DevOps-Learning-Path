@@ -1,0 +1,3 @@
+FROM mysql:8.0-debian
+
+COPY ./master.cnf /etc/mysql/cnf.d/

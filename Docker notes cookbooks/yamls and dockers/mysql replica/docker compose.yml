@@ -1,0 +1,37 @@
+version: "3"
+
+networks:
+    mysqlnet:
+        driver: bridge
+services:
+    master:
+        build:
+            context: ./
+            dockerfile: dockerfile.master
+        # image:  inside dockerfile above
+        hostname: master
+        container_name: master
+        tty: true
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        command: --default-authentication-plugin=mysql_native_password
+        networks:
+            - mysqlnet
+
+    replica:
+        build:
+            context: ./
+            dockerfile: dockerfile.replica
+        # image:  inside dockerfile above
+        hostname: replica
+        container_name: replica
+        tty: true
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        command: --default-authentication-plugin=mysql_native_password
+        networks:
+            - mysqlnet
