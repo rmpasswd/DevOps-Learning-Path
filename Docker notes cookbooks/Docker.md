@@ -96,7 +96,7 @@ Then remove all 'supabase' containers: `docker rm $(docker ps -aq --filter name=
   
 
 **To remove all images:**  
-There is a catch. first we cannot use the 'repository' column name in the filter, we can use 'reference' instead,we can mention repository field and the tag field as well. Secondly, the filter wildcard is not working as expected...  
+There is a catch. We can filter on the 'repository' field but we need to use the word 'reference' instead of 'repository'; we can mention the tag field as well. Secondly, the filter wildcard is not working with this syntax...  
 ![docker images filter](../media%20assets/image-4.png)
 
 It seems that wildcards are not working as expected. But only specifying * and nothing else shows 'nginx'.  
