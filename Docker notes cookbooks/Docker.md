@@ -1,7 +1,7 @@
 ## Why use a container engine( Docker, [Podman](https://docs.podman.io/en/latest/index.html) ) **instead of** traditional Virtual Machine( via VMWare, Virtualbox) ?
 **=>**
-Goal: Seperate the different concerns of a project (front-end, backend, database).
-![image](https://github.com/user-attachments/assets/27d67b70-8ccb-48b4-8767-bd5536cf4a05)
+Goal: Seperate the different concerns of a project (front-end, backend, database).  
+![image](https://github.com/user-attachments/assets/27d67b70-8ccb-48b4-8767-bd5536cf4a05)  
 In traditional approach each app needs a seperate guest-os, meaning more overhead, resource-lock etc. (todo) <br>
 But in Containers approach, a 'container engine' seperates the concerns such as 'each app and its package' can be seperated and still can have what it needs(abstractions, api calls)
 
@@ -81,14 +81,14 @@ The following container are running and needs to forefully shutdown and the imag
 ![`docker ps` output](../media%20assets/image-1.png)
 
 `docker ps -q --filter name=supabase*`  
-Applies filter on NAMES column, this command will only print the containerID column because of -q(quiet) flag
-![docker ps filter](../media%20assets/image-2.png)
+Applies filter on NAMES column, this command will only print the containerID column because of -q(quiet) flag  
+![docker ps filter](../media%20assets/image-2.png)  
 
 `docker ps --filter name=supabase* --format "table {{.ID}}\t{{.Names}}"`  
 We can also omit quiet flag and use --format.  
 [docs about format flag](https://docs.docker.com/engine/cli/formatting/#json)  
 [docs about filter flag](https://docs.docker.com/reference/cli/docker/container/ls/#filter)  
-![docker ps filter show name](../media%20assets/image-3.png)
+![docker ps filter show name](../media%20assets/image-3.png)  
 
 
 To simply stop all containers: `docker kill $(docker ps -q)`. **Works in powershell only, \$() not supported in cmd**  
@@ -107,7 +107,41 @@ The supabase imamges have 2 slash, nginx has 0 slash, thats why it matched, and 
 ![docker iamge filter 2](../media%20assets/image-6.png)
 
 `docker images --filter=reference='*\/supabase\/*'` Note: the slash **/** has to be escaped with a backslash **\\**  
-And finally delete the images in _windows powershell_ with `docker rmi $(docker images -q --filter=reference='*\/supabase\/*')`
+And finally delete the images in _windows powershell_ with `docker rmi $(docker images -q --filter=reference='*\/supabase\/*')`  
+
+
+
+** To remove specific images, using a timestamp**    
+Alternate: instead of timestamp, filter on before=ID  
+![alt text](image-4.png)<br>
+
+We can delete old images using 'until' filter.  
+Before deleting we first  list and see what will be deleted: `docker images  --filter "until=2025-02-13"`   
+Then: `docker prune --filter "until=2025-02-13"`  
+What if:  
+I want to delete recent images, not old ones? as per docs, we could assign labels at first and use filtering on labels:  
+>label (label=<key>, label=<key>=<value>, label!=<key>, or label!=<key>=<value>) - only remove images with (**or without, in case label!=... is used**) the specified labels.  
+
+Workaround:  
+The set of 'all images' _minus_ the set of 'all images until the date':  
+![alt text](image.png)  
+![alt text](image-1.png)  
+Then wrap the entire thing within $()  
+
+`docker rmi $(docker images --format {{.ID}} | grep -v -f <(docker images --format {{.ID}} --filter "until=2025-02-13"))`  
+
+- Error: Error response from daemon: conflict: unable to delete 5ff03ed27a2d (must be forced) - image is being used by stopped container bc8f2bae1771
+
+** To remove specific containers, using filter**    
+
+To filter by ID we need the full id, not the default truncated one.  
+![alt text](image-7.png)  
+**Also note that the column names are different than what we are using inside the filter, 'CreatedAt' instead of 'CREATED', to get detail list of these 'Go Template Variables' : `docker ps  --format "{{json .}}"`**
+![alt text](image-6.png)  
+
+
+**Best Practise IMO:** Use labels whenever working, for example: when practising docker. Create containers with label 'docker-practise' or just label 'delete'  
+
 
 
 **Real Life Use Case**  
