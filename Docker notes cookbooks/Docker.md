@@ -151,8 +151,8 @@ we can deploy our existing code-base and run in docker, a **node** image is avai
 ```mermaid
 flowchart TD
     A(Docker file) --> B(Docker Image);
-    B -->C(Docker Container 1);
-    B -->D(Docker Container 2);
-    B -->E(Docker Container 3);
+    B -->C["fa: fa-docker Docker Container 1"];
+    B -->D["fa: fa-docker Docker Container 2"];
+    B -->E["fa: fa-docker Docker Container 3"];
 
 ```
